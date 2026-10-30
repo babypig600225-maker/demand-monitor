@@ -22,7 +22,8 @@ import streamlit.components.v1 as components
 
 st.set_page_config(page_title="全廠需量監控", page_icon="⚡", layout="wide")
 st.markdown(
-    "<style>.block-container{padding-top:1rem;padding-bottom:1rem;max-width:1280px}</style>",
+    "<style>header[data-testid='stHeader']{display:none}"
+    ".block-container{padding-top:0.5rem;padding-bottom:1rem;max-width:1280px}</style>",
     unsafe_allow_html=True,
 )
 
@@ -160,7 +161,7 @@ except Exception as e:  # noqa: BLE001
     st.stop()
 
 if months:
-    components.html(build_html(months, settings), height=2350, scrolling=True)
+    components.html(build_html(months, settings), height=2800, scrolling=True)
 else:
     st.info("尚無資料，請由下方管理區上傳圖控事件歷史CSV。")
 
