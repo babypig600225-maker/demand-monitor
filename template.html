@@ -57,6 +57,87 @@ button.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
 .hide{display:none!important}
 .status{font-size:12px;color:var(--muted)}
 @media print{.noprint{display:none!important}body{background:#fff}}
+/* ===== 遊戲化 ===== */
+.hero{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;padding:14px 20px;background:linear-gradient(120deg,#fbfdf6,#f2fafc)}
+.hero.lv-bad{background:linear-gradient(120deg,#fff6f4,#fff)}
+.hero.lv-warn{background:linear-gradient(120deg,#fffaf0,#fff)}
+.mascot-wrap{text-align:center;width:130px}
+#mascot svg{width:120px;height:auto;display:block;margin:0 auto;overflow:visible}
+.mname{font-size:11px;color:var(--muted);margin-top:2px}
+.bubble{position:relative;background:#fff;border:2px solid var(--brand);border-radius:16px;padding:12px 16px;box-shadow:0 3px 0 rgba(148,197,53,.25)}
+.bubble:before{content:"";position:absolute;left:-12px;top:50%;margin-top:-10px;border:10px solid transparent;border-right-color:var(--brand);border-left:0}
+.bubble:after{content:"";position:absolute;left:-8px;top:50%;margin-top:-8px;border:8px solid transparent;border-right-color:#fff;border-left:0}
+.lv-warn .bubble{border-color:var(--warn);box-shadow:0 3px 0 rgba(224,138,0,.2)}.lv-warn .bubble:before{border-right-color:var(--warn)}
+.lv-bad .bubble{border-color:var(--bad);box-shadow:0 3px 0 rgba(210,56,43,.2)}.lv-bad .bubble:before{border-right-color:var(--bad)}
+.pill{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:13px;padding:3px 12px;border-radius:999px;color:#fff;background:var(--ok)}
+.pill i{width:10px;height:10px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.35)}
+.lv-warn .pill{background:var(--warn)}.lv-bad .pill{background:var(--bad)}
+#statusMsg{margin:8px 0 0;font-size:15px;line-height:1.6;color:var(--ink)}
+#statusMsg b{color:var(--bad)}
+.gauge{width:230px}
+.gauge svg{width:100%;height:auto;display:block}
+.needle{transition:transform 1.4s cubic-bezier(.34,1.56,.64,1)}
+.tile .lab .ic{font-size:18px;margin-right:6px;vertical-align:-2px}
+.tile{transition:transform .2s,box-shadow .2s}
+.tile:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(0,0,0,.08)}
+/* 月曆熱力圖 */
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.calh{text-align:center;font-size:12px;color:var(--muted);padding:2px 0}
+.calh.we{color:#b0b0b0}
+.calc{position:relative;min-height:64px;border-radius:10px;background:#f1f6ea;border:2px solid transparent;padding:4px 6px;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-end;cursor:pointer;transition:transform .15s,box-shadow .15s;color:var(--ink)}
+.calc:hover{transform:scale(1.06);box-shadow:0 4px 12px rgba(0,0,0,.15);z-index:2}
+.calc .dn{position:absolute;left:7px;top:4px;font-size:12px;font-weight:700;opacity:.8}
+.calc .hb{position:absolute;left:24px;top:5px;font-size:10px;padding:0 4px;border-radius:4px;background:rgba(0,0,0,.08)}
+.calc b{font-size:15px;font-variant-numeric:tabular-nums}
+.calc small{font-size:10px;opacity:.75}
+.calc .fire{position:absolute;right:5px;top:2px;font-size:14px}
+.calc.dark{color:#fff}
+.calc.warn{background:var(--warn);color:#fff}
+.calc.bad{background:var(--bad);color:#fff}
+.calc.hol{background-image:repeating-linear-gradient(135deg,transparent 0 6px,rgba(255,255,255,.35) 6px 8px)}
+.calc.sel{border-color:var(--ink)}
+.calc.empty{background:transparent;cursor:default}.calc.empty:hover{transform:none;box-shadow:none}
+.calc.nodata{background:#fafafa;border:2px dashed var(--line);cursor:default;color:var(--muted)}.calc.nodata:hover{transform:none;box-shadow:none}
+.heatlegend{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:8px}
+.heatlegend .ramp{width:120px;height:10px;border-radius:5px;background:linear-gradient(90deg,#f1f6ea,#7fb52a)}
+.heatlegend .chip{display:inline-block;width:14px;height:10px;border-radius:3px;vertical-align:-1px;margin-right:4px}
+/* 甜甜圈 */
+.donut{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin:6px 0 10px}
+.donut svg{width:170px;height:170px}
+.donut .seg{transition:stroke-dasharray 1.2s ease-out}
+.dleg{display:flex;flex-direction:column;gap:10px;font-size:13px}
+.dleg b{font-size:20px;color:var(--ink);display:block}
+.dleg .sw{width:12px;height:12px;border-radius:3px}
+/* 排行 */
+.mbar{display:inline-block;width:70px;height:8px;border-radius:4px;background:var(--grid);margin-right:8px;vertical-align:middle;overflow:hidden}
+.mbar i{display:block;height:100%;background:var(--c0);border-radius:4px}
+.mbar.bad i{background:var(--bad)}
+.medal{font-size:16px;margin-right:4px}
+/* 動畫（只在開啟或切換月份時播放一次） */
+@media (prefers-reduced-motion:no-preference){
+  .play .hero{animation:rise .5s both}
+  .play .tile{animation:rise .5s both}
+  .play .tile:nth-child(2){animation-delay:.08s}.play .tile:nth-child(3){animation-delay:.16s}.play .tile:nth-child(4){animation-delay:.24s}
+  .play #mascot svg{animation:pop .7s .15s both}
+  .play .lv-ok .arm-wave{animation:wave .5s .9s 4 alternate ease-in-out}
+  .play .lv-bad #mascot svg{animation:pop .7s .15s both,shake .45s .9s 3}
+  .play .lv-warn #mascot svg{animation:pop .7s .15s both,tilt .8s .9s 2 alternate}
+  .play .drop{animation:drip 1.1s .9s 3}
+  .cal.anim .calc:not(.empty){animation:cellin .45s both}
+}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{transform:scale(.2) translateY(30px);opacity:0}60%{transform:scale(1.12)}80%{transform:scale(.95)}100%{transform:scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px) rotate(-4deg)}75%{transform:translateX(6px) rotate(4deg)}}
+@keyframes tilt{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
+@keyframes wave{from{transform:rotate(0)}to{transform:rotate(-28deg)}}
+@keyframes drip{0%{transform:translateY(0);opacity:1}100%{transform:translateY(16px);opacity:0}}
+@keyframes cellin{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr;text-align:center}
+  .bubble:before,.bubble:after{display:none}
+  .mascot-wrap,.gauge{margin:0 auto}
+  .calc{min-height:48px;padding:3px}.calc small{display:none}.calc b{font-size:12px}.calc .hb{display:none}
+}
 </style>
 </head>
 <body>
@@ -94,59 +175,65 @@ button.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
   </section>
 
   <div id="report" class="hide">
-    <section class="tiles">
-      <div class="card tile"><div class="lab">本月最高需量</div><div class="val" id="kPeak">—</div><div class="s" id="kPeakS">—</div></div>
-      <div class="card tile"><div class="lab">超過警戒線</div><div class="val" id="kOver">—</div><div class="s" id="kOverS">—</div></div>
-      <div class="card tile"><div class="lab">基載（凌晨0–4點平均）</div><div class="val" id="kBase">—</div><div class="s" id="kBaseS">—</div></div>
-      <div class="card tile"><div class="lab">本月用電量</div><div class="val" id="kKwh">—</div><div class="s" id="kKwhS">—</div></div>
+    <section class="card hero" id="hero">
+      <div class="mascot-wrap"><div id="mascot"></div><div class="mname">電力小精靈「小電」</div></div>
+      <div class="bubble"><span class="pill" id="statusPill"><i></i>—</span><p id="statusMsg">—</p></div>
+      <div class="gauge" id="gauge"></div>
+    </section>
+
+    <section class="tiles" style="margin-top:12px">
+      <div class="card tile"><div class="lab"><span class="ic">⚡</span>本月最高需量</div><div class="val" id="kPeak">—</div><div class="s" id="kPeakS">—</div></div>
+      <div class="card tile"><div class="lab"><span class="ic">🚨</span>超過警戒線</div><div class="val" id="kOver">—</div><div class="s" id="kOverS">—</div></div>
+      <div class="card tile"><div class="lab"><span class="ic">🌙</span>基載（凌晨0–4點平均）</div><div class="val" id="kBase">—</div><div class="s" id="kBaseS">—</div></div>
+      <div class="card tile"><div class="lab"><span class="ic">🔌</span>本月用電量</div><div class="val" id="kKwh">—</div><div class="s" id="kKwhS">—</div></div>
     </section>
 
     <section class="card" style="margin-top:12px">
-      <h2>每日最高需量</h2>
-      <p class="note">紅色＝超過警戒線，灰色＝假日。點選長條可在下方查看當天曲線。</p>
-      <div class="legend"><span><i style="background:var(--bad)"></i>契約容量</span><span><i style="background:var(--warn)"></i>警戒線</span></div>
+      <h2>📅 每日最高需量月曆</h2>
+      <p class="note">每格是當天最高的15分鐘需量，顏色越深代表越高；斜紋＝假日。點選日期可在下方查看當天曲線。</p>
+      <div class="heatlegend"><span>低</span><span class="ramp"></span><span>高</span><span><i class="chip" style="background:var(--warn)"></i>超過警戒線</span><span><i class="chip" style="background:var(--bad)"></i>超過契約 🔥</span></div>
       <div class="chart" id="cDaily"></div>
     </section>
 
     <section class="card" style="margin-top:12px">
-      <div class="row"><h2>單日15分鐘需量曲線</h2><select id="daySel" class="noprint"></select></div>
+      <div class="row"><h2>📈 單日15分鐘需量曲線</h2><select id="daySel" class="noprint"></select></div>
       <p class="note" id="dayNote">合計＝新廠MVCB＋舊廠HM。</p>
-      <div class="legend"><span><i style="background:var(--ink)"></i>合計</span><span><i style="background:var(--c0)"></i>新廠</span><span><i style="background:var(--c1)"></i>舊廠</span></div>
+      <div class="legend"><span><i style="background:var(--ink)"></i>合計</span><span><i style="background:var(--c0)"></i>新廠</span><span><i style="background:var(--c1)"></i>舊廠</span><span><i style="background:rgba(210,56,43,.35);height:9px"></i>超過警戒線的部分</span></div>
       <div class="chart" id="cDay"></div>
     </section>
 
     <section class="grid2" style="margin-top:12px">
       <div class="card">
-        <h2>平日 vs 假日 每小時平均負載</h2>
+        <h2>🕒 平日 vs 假日 每小時平均負載</h2>
         <p class="note">夜間水準即為基載；假日白天偏低可能是太陽能發電抵銷。</p>
         <div class="legend"><span><i style="background:var(--c0)"></i>平日</span><span><i style="background:var(--gray)"></i>假日</span></div>
         <div class="chart" id="cProf"></div>
       </div>
       <div class="card">
-        <h2>新廠 vs 舊廠 用電占比</h2>
+        <h2>🏭 新廠 vs 舊廠 用電占比</h2>
         <p class="note">依本月電度累計值計算。</p>
-        <div class="bars" id="shareBar"></div>
+        <div class="donut" id="shareBar"></div>
         <table><thead><tr><th>區域</th><th>用電量（度）</th><th>最高需量（kW）</th></tr></thead><tbody id="shareTb"></tbody></table>
-        <h2 style="margin-top:18px">生產時段功率因數</h2>
+        <h2 style="margin-top:18px">🔧 生產時段功率因數</h2>
         <p class="note">平日8–17點，有效功率合計 ÷ 視在功率合計；低於0.9以橘色標示。</p>
         <table><thead><tr><th>電錶</th><th>平均負載（kW）</th><th>功率因數</th></tr></thead><tbody id="pfTb"></tbody></table>
       </div>
     </section>
 
     <section class="card hide" id="trendCard" style="margin-top:12px">
-      <h2>月份趨勢</h2>
+      <h2>📊 月份趨勢</h2>
       <p class="note">每月最高需量、用電量與基載，可用來對照節電措施成效。</p>
       <div class="grid2"><div class="chart" id="cTrendPeak"></div><div class="chart" id="cTrendKwh"></div></div>
     </section>
 
     <section class="card" style="margin-top:12px">
-      <h2>最高需量前20個時段</h2>
+      <h2>🏆 最高需量前20個時段</h2>
       <p class="note">時間為15分鐘區間的結束時間。</p>
       <div class="scroll"><table><thead><tr><th>時段</th><th>合計（kW）</th><th>新廠（kW）</th><th>舊廠（kW）</th></tr></thead><tbody id="topTb"></tbody></table></div>
     </section>
 
     <section class="card" style="margin-top:12px">
-      <h2>資料品質</h2>
+      <h2>🩺 資料品質</h2>
       <p class="note" id="dqNote">—</p>
       <div class="scroll" style="max-height:200px"><table><thead><tr><th>缺口開始</th><th>缺口結束</th><th>時長（小時）</th></tr></thead><tbody id="gapTb"></tbody></table></div>
     </section>
@@ -302,13 +389,92 @@ function showTip(box, tip, ev, title, lines){
 }
 const cssVar = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 
+/* ---------- 動畫工具 ---------- */
+const REDUCED = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+let ANIM_ON = false, LAST_DAY = null;
+function countUp(id, v, unit, cls){
+  const e=$(id); e.className='val '+(cls||''); const tok={}; e._tok=tok;
+  const put=x=>{ e.innerHTML=fmt(x)+'<small>'+unit+'</small>'; };
+  if (!ANIM_ON){ put(v); return; }
+  const t0=performance.now(), D=900;
+  const step=t=>{ if (e._tok!==tok) return; const p=Math.min(1,(t-t0)/D); put(v*(1-Math.pow(1-p,3))); if (p<1) requestAnimationFrame(step); else put(v); };
+  requestAnimationFrame(step);
+}
+function mix(a,b,t){ const p=s=>[1,3,5].map(i=>parseInt(s.slice(i,i+2),16)); const A=p(a),B=p(b); return 'rgb('+A.map((x,i)=>Math.round(x+(B[i]-x)*t)).join(',')+')'; }
+
+function mascotSVG(lv){
+  const body={ok:['#CDE46A','#8DBF2F'],warn:['#FFD98A','#F0A32E'],bad:['#FF9C8E','#D2382B']}[lv];
+  const eyes={
+    ok:'<path d="M40 74 q6 -8 12 0 M68 74 q6 -8 12 0" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round"/>',
+    warn:'<circle cx="46" cy="74" r="5" fill="#333"/><circle cx="74" cy="74" r="5" fill="#333"/><circle cx="47.5" cy="72.5" r="1.6" fill="#fff"/><circle cx="75.5" cy="72.5" r="1.6" fill="#fff"/><path d="M38 64 l12 3 M82 64 l-12 3" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>',
+    bad:'<path d="M40 68 l10 6 l-10 6 M80 68 l-10 6 l10 6" stroke="#333" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'
+  }[lv];
+  const mouth={
+    ok:'<path d="M47 88 q13 14 26 0 z" fill="#6b2a2a"/><path d="M53 93 q7 5 14 0" fill="#ff8f8f"/>',
+    warn:'<path d="M48 95 q4 -4 8 0 t8 0 t8 0" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>',
+    bad:'<ellipse cx="60" cy="95" rx="8" ry="10" fill="#5a1f1f"/><ellipse cx="60" cy="99" rx="5" ry="4" fill="#ff8f8f"/>'
+  }[lv];
+  const arms={
+    ok:'<path d="M20 86 q-12 6 -14 18" stroke="'+body[1]+'" stroke-width="8" fill="none" stroke-linecap="round"/><g class="arm-wave" style="transform-origin:100px 82px;transform-box:view-box"><path d="M100 82 q14 -6 14 -24" stroke="'+body[1]+'" stroke-width="8" fill="none" stroke-linecap="round"/></g>',
+    warn:'<path d="M20 84 q-10 4 -6 14 q6 2 10 -4" stroke="'+body[1]+'" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M100 84 q10 4 6 14 q-6 2 -10 -4" stroke="'+body[1]+'" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
+    bad:'<path d="M20 80 q-14 -10 -8 -30" stroke="'+body[1]+'" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M100 80 q14 -10 8 -30" stroke="'+body[1]+'" stroke-width="8" fill="none" stroke-linecap="round"/>'
+  }[lv];
+  const drop=(x,y)=>'<g transform="translate('+x+' '+y+')"><path class="drop" d="M0 0 q7 11 0 15 q-7 -4 0 -15z" fill="#7fd3f0" stroke="#4cb3d8" stroke-width="1"/></g>';
+  const drops = lv==='bad' ? drop(98,48)+drop(18,52) : lv==='warn' ? drop(96,50) : '';
+  return '<svg viewBox="0 0 120 132" role="img" aria-label="電力小精靈">'
+    +'<defs><linearGradient id="mg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+body[0]+'"/><stop offset="1" stop-color="'+body[1]+'"/></linearGradient></defs>'
+    +'<ellipse cx="60" cy="126" rx="34" ry="5" fill="rgba(0,0,0,.08)"/>'
+    +'<path d="M58 4 L46 30 L57 30 L50 48 L74 20 L62 20 L70 4 Z" fill="#FFD23F" stroke="#E0A800" stroke-width="2" stroke-linejoin="round"/>'
+    +arms
+    +'<ellipse cx="44" cy="120" rx="10" ry="6" fill="'+body[1]+'"/><ellipse cx="76" cy="120" rx="10" ry="6" fill="'+body[1]+'"/>'
+    +'<ellipse cx="60" cy="80" rx="42" ry="40" fill="url(#mg)"/>'
+    +'<ellipse cx="46" cy="60" rx="13" ry="8" fill="#fff" opacity=".35"/>'
+    +'<ellipse cx="36" cy="88" rx="6" ry="4" fill="#ff7f9a" opacity=".55"/><ellipse cx="84" cy="88" rx="6" ry="4" fill="#ff7f9a" opacity=".55"/>'
+    +eyes+mouth+drops+'</svg>';
+}
+
+function drawGauge(pk, W, C){
+  const box=$('gauge'); const R=86, cx=115, cy=108, sw=18;
+  const max=niceMax(Math.max(C*1.25, pk*1.05));
+  const ang=v=>Math.PI*(1-Math.min(v,max)/max);
+  const pt=(v,r)=>[(cx+r*Math.cos(ang(v))).toFixed(1),(cy-r*Math.sin(ang(v))).toFixed(1)];
+  const arc=(v0,v1,col)=>{ const a=pt(v0,R), b=pt(v1,R); return '<path d="M'+a+' A'+R+','+R+' 0 0 1 '+b+'" stroke="'+col+'" stroke-width="'+sw+'" fill="none"/>'; };
+  const tick=(v,txt,col,inside)=>{ const a=pt(v,R-sw/2-2), b=pt(v,R+sw/2+2), t=pt(v,inside?R-sw/2-12:R+sw/2+14); return '<line x1="'+a[0]+'" y1="'+a[1]+'" x2="'+b[0]+'" y2="'+b[1]+'" stroke="#fff" stroke-width="2.5"/><text x="'+t[0]+'" y="'+t[1]+'" text-anchor="middle" font-size="10" fill="'+col+'">'+txt+'</text>'; };
+  const deg=Math.min(pk,max)/max*180;
+  const col = pk>C ? cssVar('--bad') : pk>W ? cssVar('--warn') : cssVar('--ok');
+  box.innerHTML='<svg viewBox="0 0 230 140">'
+    +arc(0,W,'#cfe8a3')+arc(W,C,'#f6c46b')+arc(C,max,'#f08a80')
+    +tick(W,'警戒'+fmt(W),cssVar('--warn'),true)+tick(C,'契約'+fmt(C),cssVar('--bad'))
+    +'<g class="needle" style="transform-origin:'+cx+'px '+cy+'px;transform:rotate('+(ANIM_ON?0:deg)+'deg)"><path d="M'+cx+' '+(cy-5)+' L'+(cx-R+16)+' '+cy+' L'+cx+' '+(cy+5)+' Z" fill="#444"/></g>'
+    +'<circle cx="'+cx+'" cy="'+cy+'" r="9" fill="#444"/><circle cx="'+cx+'" cy="'+cy+'" r="4" fill="#fff"/>'
+    +'<text x="'+cx+'" y="'+(cy+28)+'" text-anchor="middle" font-size="22" font-weight="700" fill="'+col+'">'+fmt(pk)+' kW</text>'
+    +'<text x="'+(cx-R-2)+'" y="'+(cy+14)+'" text-anchor="middle" font-size="10" fill="#999">0</text>'
+    +'</svg>';
+  if (ANIM_ON){ const n=box.querySelector('.needle'); requestAnimationFrame(()=>requestAnimationFrame(()=>{ n.style.transform='rotate('+deg+'deg)'; })); }
+}
+
+function drawDonut(a, b){
+  const box=$('shareBar'); const r=62, C2=2*Math.PI*r, s=(a+b)||1, la=C2*a/s, lb=C2*b/s;
+  const z=ANIM_ON?0:1;
+  box.innerHTML='<svg viewBox="0 0 170 170"><g transform="rotate(-90 85 85)">'
+    +'<circle cx="85" cy="85" r="'+r+'" fill="none" stroke="var(--grid)" stroke-width="26"/>'
+    +'<circle class="seg s1" cx="85" cy="85" r="'+r+'" fill="none" stroke="var(--c0)" stroke-width="26" stroke-dasharray="'+(la*z)+' '+C2+'"/>'
+    +'<circle class="seg s2" cx="85" cy="85" r="'+r+'" fill="none" stroke="var(--c1)" stroke-width="26" stroke-dasharray="'+(lb*z)+' '+C2+'" stroke-dashoffset="'+(-la)+'"/>'
+    +'</g><text x="85" y="82" text-anchor="middle" font-size="18" font-weight="700" fill="#333">'+fmt(a+b)+'</text>'
+    +'<text x="85" y="102" text-anchor="middle" font-size="12" fill="#888">度</text></svg>'
+    +'<div class="dleg"><div><span class="sw" style="background:var(--c0)"></span>新廠<b>'+fmt(a/s*100,0)+'%</b></div><div><span class="sw" style="background:var(--c1)"></span>舊廠<b>'+fmt(b/s*100,0)+'%</b></div></div>';
+  if (ANIM_ON) requestAnimationFrame(()=>requestAnimationFrame(()=>{ box.querySelector('.s1').setAttribute('stroke-dasharray',la+' '+C2); box.querySelector('.s2').setAttribute('stroke-dasharray',lb+' '+C2); }));
+}
+
 /* ---------- render ---------- */
 let DATA = null, MONTH = null, DAY = null;
 function months(){ const s=new Set(DATA.demand.map(r=>ymd(r[0]).slice(0,7))); return [...s].sort(); }
 
-function render(){
+function render(anim){
   if (!DATA || !DATA.demand.length){ $('report').classList.add('hide'); return; }
   $('report').classList.remove('hide');
+  ANIM_ON = !!anim && !REDUCED;
+  if (ANIM_ON){ const R=$('report'); R.classList.remove('play'); void R.offsetWidth; R.classList.add('play'); }
   const ms = months(); if (!MONTH || !ms.includes(MONTH)) MONTH = ms[ms.length-1];
   const sel=$('monthSel'); sel.innerHTML=''; ms.forEach(m=>sel.add(new Option(m.replace('-','年')+'月', m))); sel.value=MONTH;
   const rows = DATA.demand.filter(r=>ymd(r[0]).startsWith(MONTH)).map(r=>({ms:r[0],d:ymd(r[0]),nw:r[1],od:r[2],tot:r[1]+r[2]}));
@@ -319,16 +485,31 @@ function render(){
   const night = rows.filter(r=>new Date(r.ms).getUTCHours()<4); const base = night.reduce((s,r)=>s+r.tot,0)/(night.length||1);
   const kw = DATA.monthKwh[MONTH]||{}; const tot = (kw.MVCB||0)+(kw.HM||0);
   const pd0 = new Date(Date.UTC(+MONTH.slice(0,4), +MONTH.slice(5)-2, 1)); const prevM = ymd(+pd0).slice(0,7); const pkw = ms.includes(prevM) ? DATA.monthKwh[prevM]||null : null; const ptot = pkw?(pkw.MVCB||0)+(pkw.HM||0):null;
-  $('kPeak').innerHTML = fmt(pk.tot)+'<small>kW</small>'; $('kPeak').className='val '+(pk.tot>C?'bad':pk.tot>W?'warnc':'okc');
+  countUp('kPeak', pk.tot, 'kW', pk.tot>C?'bad':pk.tot>W?'warnc':'okc');
   $('kPeakS').textContent = md(pk.d)+' '+hm(pk.ms)+'，為契約容量的 '+fmt(pk.tot/C*100,0)+'%';
-  $('kOver').innerHTML = fmt(over.length)+'<small>個時段</small>'; $('kOver').className='val '+(over.length?'bad':'okc');
+  countUp('kOver', over.length, '個時段', over.length?'bad':'okc');
   $('kOverS').textContent = '警戒線 '+fmt(W)+' kW（契約 '+fmt(C)+' kW 的 '+S.warnPct+'%），分布於 '+overDays+' 天';
-  $('kBase').innerHTML = fmt(base)+'<small>kW</small>';
+  countUp('kBase', base, 'kW', '');
   $('kBaseS').textContent = '持續一年約 '+fmt(base*8760/10000,1)+' 萬度';
-  $('kKwh').innerHTML = fmt(tot)+'<small>度</small>';
+  countUp('kKwh', tot, '度', '');
   const pct = (a,b) => (a>=b?'+':'')+fmt((a-b)/b*100,1)+'%';
   const ly = (+MONTH.slice(0,4)-1)+MONTH.slice(4); const lkw = ms.includes(ly) ? DATA.monthKwh[ly] : null; const ltot = lkw?(lkw.MVCB||0)+(lkw.HM||0):null;
   $('kKwhS').textContent = [ptot?'較上月 '+pct(tot,ptot):'無上月資料', ltot?'較去年同月 '+pct(tot,ltot):null].filter(Boolean).join('；')+(ptot||ltot?'（資料缺口會影響比較）':'');
+  // 狀態（燈號、小精靈台詞、儀表）
+  const lv = pk.tot>C ? 'bad' : pk.tot>W ? 'warn' : 'ok';
+  const hc = new Array(24).fill(0); (over.length?over:[pk]).forEach(r=>hc[new Date(r.ms-60000).getUTCHours()]++);
+  const hmax=Math.max(...hc); let ha=hc.indexOf(hmax), hb=ha; while (ha>0&&hc[ha-1]>=hmax*0.5) ha--; while (hb<23&&hc[hb+1]>=hmax*0.5) hb++;
+  const win = ha+'–'+(hb+1)+' 點';
+  $('hero').className='card hero lv-'+lv;
+  $('mascot').innerHTML = mascotSVG(lv);
+  $('statusPill').innerHTML = '<i></i>'+({ok:'用電正常',warn:'接近警戒',bad:'已超過契約容量'}[lv]);
+  const pctC = fmt(pk.tot/C*100,0);
+  $('statusMsg').innerHTML = lv==='bad'
+    ? '糟糕！本月最高需量 <b>'+fmt(pk.tot)+' kW</b>（'+md(pk.d)+' '+hm(pk.ms)+'），超過契約 <b>'+fmt((pk.tot/C-1)*100,0)+'%</b>。共 '+fmt(over.length)+' 個時段超過警戒線，多集中在 <b>'+win+'</b>，這個時段請盡量錯開大負載喔！'
+    : lv==='warn'
+    ? '差一點就超約了！本月最高需量 '+fmt(pk.tot)+' kW，是契約的 '+pctC+'%。'+(over.length?fmt(over.length)+' 個時段超過警戒線，多在 '+win+'，':'')+'請多留意。'
+    : '太棒了！本月最高需量 '+fmt(pk.tot)+' kW，只有契約的 '+pctC+'%，用電很穩定，繼續保持 ✨';
+  drawGauge(pk.tot, W, C);
   // days
   const days = {}; rows.forEach(r=>{ const o=days[r.d]=days[r.d]||{d:r.d,peak:0,at:0,nw:0,od:0,n:0}; if (r.tot>o.peak){o.peak=r.tot;o.at=r.ms;} o.nw=Math.max(o.nw,r.nw); o.od=Math.max(o.od,r.od); o.n++; });
   const dayList = Object.values(days).sort((a,b)=>a.d<b.d?-1:1);
@@ -339,15 +520,17 @@ function render(){
   drawProfile(rows);
   // share
   const nwK=kw.MVCB||0, odK=kw.HM||0, sum=nwK+odK||1;
-  $('shareBar').innerHTML='';
-  [[nwK,'var(--c0)','新廠'],[odK,'var(--c1)','舊廠']].forEach(([v,c,n])=>{ const d=document.createElement('div'); d.style.width=(v/sum*100)+'%'; d.style.background=c; d.textContent=n+' '+fmt(v/sum*100,0)+'%'; $('shareBar').appendChild(d); });
+  drawDonut(nwK, odK);
   const nwPk=Math.max(...rows.map(r=>r.nw)), odPk=Math.max(...rows.map(r=>r.od));
   $('shareTb').innerHTML=''; [['新廠（MVCB）',nwK,nwPk],['舊廠（HM）',odK,odPk],['合計',nwK+odK,pk.tot]].forEach(([n,a,b])=>{ const tr=$('shareTb').insertRow(); tr.insertCell().textContent=n; tr.insertCell().textContent=fmt(a); tr.insertCell().textContent=fmt(b); });
   // pf
   const pf = DATA.pf[MONTH]||{}; $('pfTb').innerHTML='';
   [['MVCB','新廠總盤 MVCB'],['VCB1','新廠 VCB1'],['VCB2','新廠 VCB2'],['HM','舊廠 HM']].forEach(([k,n])=>{ const o=pf[k]; if (!o) return; const tr=$('pfTb').insertRow(); tr.insertCell().textContent=n; tr.insertCell().textContent=fmt(o.avg); const c=tr.insertCell(); c.textContent=o.pf!=null?o.pf.toFixed(3):'—'; if (o.pf!=null&&o.pf<0.9) c.className='warnc'; });
   // top20
-  $('topTb').innerHTML=''; [...rows].sort((a,b)=>b.tot-a.tot).slice(0,20).forEach(r=>{ const tr=$('topTb').insertRow(); tr.insertCell().textContent=md(r.d)+' '+hm(r.ms); const c=tr.insertCell(); c.textContent=fmt(r.tot); if (r.tot>W) c.className='bad'; tr.insertCell().textContent=fmt(r.nw); tr.insertCell().textContent=fmt(r.od); });
+  $('topTb').innerHTML=''; const top=[...rows].sort((a,b)=>b.tot-a.tot).slice(0,20); const tmax=top.length?top[0].tot:1;
+  top.forEach((r,i)=>{ const tr=$('topTb').insertRow(); const c0=tr.insertCell(); if (i<3){ const m=document.createElement('span'); m.className='medal'; m.textContent=['🥇','🥈','🥉'][i]; c0.appendChild(m); } else { const m=document.createElement('span'); m.className='medal'; m.style.cssText='display:inline-block;width:20px;text-align:center;font-size:12px;color:#999'; m.textContent=i+1; c0.appendChild(m); } c0.appendChild(document.createTextNode(md(r.d)+' '+hm(r.ms)));
+    const c=tr.insertCell(); const bar=document.createElement('span'); bar.className='mbar'+(r.tot>W?' bad':''); const bi=document.createElement('i'); bi.style.width=(r.tot/tmax*100)+'%'; bar.appendChild(bi); c.appendChild(bar); c.appendChild(document.createTextNode(fmt(r.tot))); if (r.tot>W) c.className='bad';
+    tr.insertCell().textContent=fmt(r.nw); tr.insertCell().textContent=fmt(r.od); });
   // data quality
   const mStart=Date.UTC(+MONTH.slice(0,4), +MONTH.slice(5)-1, 1), mEnd=Date.UTC(+MONTH.slice(0,4), +MONTH.slice(5), 1);
   const gaps = DATA.gaps.filter(g=>g[1]>mStart && g[0]<mEnd);
@@ -361,21 +544,33 @@ function render(){
 }
 
 function drawDaily(list, W, C){
-  const box=$('cDaily'), H=260, m={t:14,r:10,b:28,l:46}; const {svg,W:w,tip}=frame(box,H);
-  const ymax=niceMax(Math.max(C*1.05, ...list.map(o=>o.peak))); const y=v=>H-m.b-(v/ymax)*(H-m.t-m.b);
-  yAxis(svg,w,m,H,ymax,y);
-  const bw=(w-m.l-m.r)/list.length, gap=Math.min(6,bw*0.25);
-  const every=Math.ceil(list.length/Math.floor((w-m.l)/42));
-  list.forEach((o,i)=>{
-    const x=m.l+i*bw+gap/2, hol=isHol(o.d);
-    const col = o.peak>W?'var(--bad)':(hol?'var(--gray)':'var(--c0)');
-    const r=el('rect',{x,y:y(o.peak),width:Math.max(1,bw-gap),height:y(0)-y(o.peak),rx:2,fill:col,stroke:o.d===DAY?'var(--ink)':'none','stroke-width':1.5,style:'cursor:pointer'},svg);
-    r.addEventListener('mousemove',ev=>showTip(box,tip,ev,md(o.d)+'（'+WK[new Date(o.d+'T00:00:00Z').getUTCDay()]+(hol?'・假日':'')+'）',[[null,'最高需量',fmt(o.peak)+' kW @ '+hm(o.at)],[null,'資料筆數',o.n+'/96']]));
-    r.addEventListener('mouseleave',()=>tip.style.display='none');
-    r.addEventListener('click',()=>{ DAY=o.d; render(); });
-    if (i%every===0){ const t=el('text',{x:x+(bw-gap)/2,y:H-m.b+16,'text-anchor':'middle','font-size':11,fill:'var(--muted)'},svg); t.textContent=md(o.d); }
-  });
-  hline(svg,m.l,w-m.r,y(C),'var(--bad)','契約 '+fmt(C)+' kW'); hline(svg,m.l,w-m.r,y(W),'var(--warn)','警戒 '+fmt(W)+' kW');
+  const box=$('cDaily'); box.innerHTML=''; box.style.minHeight='0';
+  const map={}; list.forEach(o=>map[o.d]=o);
+  const y0=+MONTH.slice(0,4), m0=+MONTH.slice(5)-1;
+  const first=new Date(Date.UTC(y0,m0,1)).getUTCDay(), nd=new Date(Date.UTC(y0,m0+1,0)).getUTCDate();
+  const grid=document.createElement('div'); grid.className='cal'+(ANIM_ON?' anim':'');
+  const tip=document.createElement('div'); tip.className='tip'; tip.style.display='none';
+  WK.forEach((w,i)=>{ const e=document.createElement('div'); e.className='calh'+(i===0||i===6?' we':''); e.textContent=w; grid.appendChild(e); });
+  for (let i=0;i<first;i++){ const e=document.createElement('div'); e.className='calc empty'; grid.appendChild(e); }
+  for (let d=1; d<=nd; d++){
+    const ds=MONTH+'-'+pad(d), o=map[ds], hol=isHol(ds), wk=WK[new Date(ds+'T00:00:00Z').getUTCDay()];
+    const c=document.createElement('div'); c.className='calc'+(hol?' hol':'')+(ds===DAY?' sel':'');
+    const dn=document.createElement('span'); dn.className='dn'; dn.textContent=d; c.appendChild(dn);
+    if (hol){ const hb=document.createElement('span'); hb.className='hb'; hb.textContent='假'; c.appendChild(hb); }
+    if (o){
+      if (o.peak>C) c.classList.add('bad'); else if (o.peak>W) c.classList.add('warn');
+      else { const t=Math.max(0,Math.min(1,(o.peak/W-0.15)/0.85)); c.style.backgroundColor=mix('#f1f6ea','#7fb52a',t); if (t>0.62) c.classList.add('dark'); }
+      if (o.peak>C){ const f=document.createElement('span'); f.className='fire'; f.textContent='🔥'; c.appendChild(f); }
+      const v=document.createElement('b'); v.textContent=fmt(o.peak); c.appendChild(v);
+      const s=document.createElement('small'); s.textContent=hm(o.at); c.appendChild(s);
+      c.addEventListener('click',()=>{ DAY=ds; render(); document.getElementById('cDay').scrollIntoView({behavior:'smooth',block:'center'}); });
+      c.addEventListener('mousemove',ev=>showTip(box,tip,ev,md(ds)+'（'+wk+(hol?'・假日':'')+'）',[[null,'最高需量',fmt(o.peak)+' kW @ '+hm(o.at)],[null,'契約比例',fmt(o.peak/C*100)+'%'],[null,'資料筆數',o.n+'/96']]));
+      c.addEventListener('mouseleave',()=>tip.style.display='none');
+      if (ANIM_ON) c.style.animationDelay=(d*15)+'ms';
+    } else { c.classList.add('nodata'); const s=document.createElement('small'); s.textContent='無資料'; c.appendChild(s); }
+    grid.appendChild(c);
+  }
+  box.appendChild(grid); box.appendChild(tip);
 }
 
 function drawDay(rows, W, C){
@@ -388,7 +583,18 @@ function drawDay(rows, W, C){
   hline(svg,m.l,w-m.r,y(C),'var(--bad)','契約 '+fmt(C)+' kW'); hline(svg,m.l,w-m.r,y(W),'var(--warn)','警戒 '+fmt(W)+' kW');
   $('dayNote').textContent='合計＝新廠MVCB＋舊廠HM。'+DAY.replace(/-/g,'/')+' 共 '+rows.length+' 筆15分鐘資料'+(rows.length<90?'（有缺漏，斷線處為缺資料）':'')+'。';
   const path=(k)=>{ let d='',prev=null; rows.forEach(r=>{ d+=((prev==null||r.ms-prev>30*60000)?'M':'L')+x(r.ms).toFixed(1)+','+y(r[k]).toFixed(1); prev=r.ms; }); return d; };
-  [['nw','var(--c0)'],['od','var(--c1)'],['tot','var(--ink)']].forEach(([k,c])=>el('path',{d:path(k),fill:'none',stroke:c,'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'},svg));
+  // 超過警戒線的部分填紅色
+  const cid='ov'+Math.random().toString(36).slice(2,8);
+  const defs=el('defs',{},svg); const cp=el('clipPath',{id:cid},defs); el('rect',{x:m.l,y:0,width:w-m.l-m.r,height:Math.max(0,y(W))},cp);
+  let ad='', seg=[];
+  const flush=()=>{ if (seg.length>1) ad+='M'+x(seg[0].ms).toFixed(1)+','+y(W).toFixed(1)+seg.map(r=>'L'+x(r.ms).toFixed(1)+','+y(r.tot).toFixed(1)).join('')+'L'+x(seg[seg.length-1].ms).toFixed(1)+','+y(W).toFixed(1)+'Z'; seg=[]; };
+  rows.forEach((r,i)=>{ if (i&&r.ms-rows[i-1].ms>30*60000) flush(); seg.push(r); }); flush();
+  if (ad) el('path',{d:ad,fill:'rgba(210,56,43,.28)','clip-path':'url(#'+cid+')'},svg);
+  const drawAnim = !REDUCED && (ANIM_ON || DAY!==LAST_DAY); LAST_DAY = DAY;
+  [['nw','var(--c0)'],['od','var(--c1)'],['tot','var(--ink)']].forEach(([k,c],i)=>{
+    const p=el('path',{d:path(k),fill:'none',stroke:c,'stroke-width':k==='tot'?2.5:2,'stroke-linejoin':'round','stroke-linecap':'round'},svg);
+    if (drawAnim && p.getTotalLength){ const L=p.getTotalLength(); if (L>0){ p.style.strokeDasharray=L; p.style.strokeDashoffset=L; p.getBoundingClientRect(); p.style.transition='stroke-dashoffset 1.3s ease-out '+(i*0.15)+'s'; requestAnimationFrame(()=>{ p.style.strokeDashoffset=0; }); setTimeout(()=>{ p.style.strokeDasharray=''; p.style.transition=''; }, 1800); } }
+  });
   const dot=el('circle',{r:4,fill:'var(--ink)',opacity:0},svg);
   const ov=el('rect',{x:m.l,y:m.t,width:w-m.l-m.r,height:H-m.t-m.b,fill:'transparent'},svg);
   ov.addEventListener('mousemove',ev=>{ if(!rows.length) return; const rc=svg.getBoundingClientRect(); const px=(ev.clientX-rc.left)*w/rc.width; const t=d0+(px-m.l)/(w-m.l-m.r)*86400000;
@@ -448,7 +654,7 @@ async function loadFiles(files){
   $('loadStatus').textContent = '已載入 '+names.length+' 個檔案、'+fmt(RAW.size)+' 筆電力紀錄，月份：'+(ms.join('、')||'無');
   $('btnExport').disabled = !DATA.demand.length;
   if (!DATA.demand.length) alert('找不到電度（KWH）資料，請確認匯出的點位包含 MVCB／HM 的電度。');
-  render();
+  render(true);
 }
 
 function exportReport(){
@@ -461,7 +667,7 @@ function exportReport(){
   setTimeout(()=>URL.revokeObjectURL(a.href),2000);
 }
 
-$('monthSel').addEventListener('change',e=>{ MONTH=e.target.value; DAY=null; render(); });
+$('monthSel').addEventListener('change',e=>{ MONTH=e.target.value; DAY=null; render(true); });
 $('daySel').addEventListener('change',e=>{ DAY=e.target.value; render(); });
 let rT; window.addEventListener('resize',()=>{ clearTimeout(rT); rT=setTimeout(render,150); });
 
@@ -473,13 +679,13 @@ if (window.__RAW__){
     for (const pt in f.points){ for (const [sec,v] of f.points[pt]) RAW.set(pt+'|'+(sec*1000), v); }
   }
   DATA = compute();
-  render();
+  render(true);
   const up = (window.__SETTINGS__||{}).updated;
   if (up) $('foot').textContent += ' 資料最後更新：'+up+'。';
 } else if (EMBED){
   $('adminPanel').remove();
   DATA = EMBED.data;
-  render();
+  render(true);
 } else {
   syncSettingsUI();
   ['setContract','setWarn','setHol'].forEach(id=>$(id).addEventListener('change',onSettings));

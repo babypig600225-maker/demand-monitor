@@ -161,7 +161,7 @@ except Exception as e:  # noqa: BLE001
     st.stop()
 
 if months:
-    components.html(build_html(months, settings), height=2800, scrolling=True)
+    components.html(build_html(months, settings), height=3500, scrolling=True)
 else:
     st.info("尚無資料，請由下方管理區上傳圖控事件歷史CSV。")
 
